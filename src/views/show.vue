@@ -42,7 +42,6 @@
 <script>
 export default {
     computed:{
-
         view(){
             return this.$store.getters.viewNew
         }

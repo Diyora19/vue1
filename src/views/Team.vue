@@ -2,8 +2,7 @@
     <div>
         Team
         <div class="search">
-            <v-text-field v-model="search" placeholder="Search" 
-            >
+            <v-text-field v-model="search" placeholder="Search">
 
             </v-text-field>
         </div>
@@ -69,37 +68,19 @@ export default {
             } else {
                 this.cloneList = this.lists
             }
-        }
+        } 
     },
     
     computed:{
         lists(){
             return this.$store.getters.GetNews;
         },
-        // searches(){
-            
-        //     for (let list of this.lists) {
-
-        //         let list1 =[ list]
-        //         console.log(list1)
-        //         for(let i=0; i<list.length;i++){
-
-        //             if(list1[i].name.toLowerCase().includes(this.searchM.toLowerCase())){
-
-        //                 return list1[i]
-        //                 }
-               
-
-                    
-        //         }
-
-        //     return list1
-        //     }
-
-        // }
+    },
+    mounted() {
+        this.cloneList = [...this.lists]
     },
     filters:{
-        dateSplitter(val){
+        dateSplitter(val){ 
             let res = ''
             res += val && val.split('-').reverse()[1] + '.'
             res += val && val.split('-').reverse()[0] + '.'
@@ -108,9 +89,7 @@ export default {
         }
     },
 
-    mounted() {
-        this.cloneList = [...this.lists]
-    },
+    
     methods:{
         searches(){
             for (const list of this.lists) {

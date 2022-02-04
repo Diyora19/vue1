@@ -1,35 +1,29 @@
 {
   "news": [
     {
-      "name": "Jhon",
-      "arr1": "18-29",
-      "email": "test@gmail.com",
-      "password": "testst",
-      "date": "2021-09-28",
-      "id": 6
+      "id": 17
     },
     {
       "name": "test",
       "arr1": "18-29",
-      "email": "testtt",
-      "date": "0121-12-12",
-      "id": 7
+      "email": "test",
+      "date": "1212-12-12",
+      "id": 18
     },
     {
-      "name": "Hello",
-      "arr1": "18-29",
-      "email": "test@gmail.com",
-      "password": "test",
-      "date": "2021-09-30",
-      "id": 8
+      "id": 19
     },
     {
-      "name": "testtt",
-      "arr1": "0-17",
-      "email": "test@gmai.com",
-      "password": "222332asdf",
-      "date": "2021-10-20",
-      "id": 9
+      "id": 20
+    },
+    {
+      "id": 21
+    },
+    {
+      "id": 22
+    },
+    {
+      "id": 23
     }
   ]
 }

@@ -90,7 +90,7 @@
       <v-row class="mb-5">
         <v-tooltip top  small>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn small flat depressed v-bind="attrs"
+            <v-btn small depressed v-bind="attrs"
           v-on="on" class="grey--text" @click="sort('name')">
               <v-icon small left>mdi-folder</v-icon>
               <span class="text-lowercase"> By user name</span>
@@ -121,7 +121,9 @@
         </v-col>
         <v-col cols="2" sm="2" md="2" align='right'>
           <span>
-              <v-icon @click="edit(list)" class="info--text ">mdi-pencil</v-icon>
+              <v-btn @click="editNews(list)" icon>
+                <v-icon class="info--text ">mdi-pencil</v-icon>
+              </v-btn>
 
               <router-link class="show" :to="{name: 'show', params:{
                 slug: list.name
@@ -130,8 +132,10 @@
               <v-icon @click="show(list.id)" class=" primary--text mx-4">mdi-eye</v-icon>
 
               </router-link>
-
-              <v-icon @click="deleted(list.id)" class="red--text">mdi-delete</v-icon>
+              <v-btn @click="deleteNews(list.id)" icon>
+                <v-icon color="#FF0000">mdi-delete</v-icon>
+              </v-btn>
+              
           </span>
         </v-col>
         
@@ -141,49 +145,51 @@
   </div>
 </template>
 <script>
+// import axios from 'axios'
 export default {
   data() {
     return {
-      news: {
+      news: { //teppadagi modellar shu joyga ma'lumot qo'shadi, va faqat ayni paytdagi qiymatlar turadigan joy
         arr1: [],
       },
       dialog: false,
       isShow: true,
-      // lists: []
+      allItems: []
+      
     };
   },
 
-  async asyncData({store}) {
-    let allItems = store.getters.GetNews
-    console.log('all', allItems)
-    return { allItems }
-  },
 
-  methods: {
+  methods: { 
     btn(){
         this.news = {};
-        this.isShow = true
+        this.isShow = true;
+        this.dialog = true;
     },
+
     close() {
       this.dialog = false;
-
+      
     },
+
     save() {
       this.dialog = false;
-      this.$store.dispatch("SendNews", this.news);
+      this.$store.dispatch("SendNews", this.news); //to'plangan ma'lumot action ga yuboriladi
     },
-    edit(list){
+
+    EditSave(){
+      this.dialog = false;
+      this.$store.dispatch('EditNews', this.news);
+      this.news={}
+
+    },
+    editNews(list){
         this.dialog = true;
         this.news = list;
         this.isShow = false
     },
-    EditSave(){
-        this.dialog = false;
-        this.$store.dispatch('EditNews', this.news);
-        this.news={}
 
-    },
-    deleted(id){
+    deleteNews(id){
       let a = confirm('This user will be delete')
       if(a){
         this.$store.dispatch('Deleted', id)
@@ -198,6 +204,7 @@ export default {
       this.lists.sort((a, b)=>a[prop] > b[prop] ? 1 : -1) // hamma malumotlar lists ga saqlangan
     }
   },
+
   filters:{
     dateSplitter(value){
       let res = ''
@@ -206,10 +213,11 @@ export default {
       res += value && value.split('-').reverse()[2]  // year
       return res
     },
+
     slug(val){
       let res = ''
-      res += val && val.replaceAll(' ', '-').replaceAll('--', '-')
-      res.toLowerCase()
+      res += val && val.replaceAll(" ", "-").replaceAll("--", "-")
+      res.toLowerCase();
       return res
     }
   },
@@ -219,6 +227,8 @@ export default {
       return this.$store.getters.GetNews;
     },
   },
+
+
 
   mounted() {
     // this.lists = this.$store.getters.GetNews;

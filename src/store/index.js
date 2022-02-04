@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
  state:{
-  news: [],
+  news: [], // bazadagi ma'lumotlar to'planayotgan joy
   showId: null
  },
  getters:{
@@ -24,10 +24,10 @@ export default new Vuex.Store({
       if(b.id == state.showId) return b
       console.log(b)
     })
-  }
+  } 
  },
  mutations:{
-  SendNews(state, payload){
+  SendNews(state, payload){ 
     state.news.push(payload)
   },
   GetNews(state, payload){
@@ -41,13 +41,13 @@ export default new Vuex.Store({
     });
   },
   Deleted(state, payload){
-    state.news.splice(state.news.findIndex(n =>{
-      if(n.id === payload){
-        return payload
-      }
-    } ), 1);
+    // state.news.splice(state.news.findIndex(n =>{
+    //   if(n.id === payload){
+    //     return payload
+    //   }
+    // } ), 1);
 
-    // state.news = state.news.filter(x => x.id != payload)
+    state.news = state.news.filter(x => x.id != payload)
   }
      
 
@@ -56,7 +56,7 @@ export default new Vuex.Store({
   SendNews(context, payload){
     Axios.post('http://localhost:3000/news', payload)
     .then(res=> context.commit('SendNews',res.data))
-  },
+  },  
   GetNews(context){
     Axios.get('http://localhost:3000/news')
     .then(res=> context.commit('GetNews', res.data))
@@ -67,9 +67,8 @@ export default new Vuex.Store({
   },
   Deleted(context, payload){
     Axios.delete('http://localhost:3000/news/' + payload)
-    .then(res=> context.commit('Deleted', res.data))
-  }
- 
+    context.commit('Deleted', payload) 
+  },
 
  }
 
